@@ -1,0 +1,171 @@
+[
+    {
+        "name": "qq",
+        "parse": "http://laohu.cool/yhys.php?url=",
+        "parse2": "http://laohu.cool/yhys.php?url="
+    },
+    {
+        "name": "mgtv",
+        "parse": "http://laohu.cool/yhys.php?url=",
+        "parse2": "http://laohu.cool/yhys.php?url="
+    },
+    {
+        "name": "youku",
+        "parse": "http://laohu.cool/yhys.php?url=",
+        "parse2": "http://laohu.cool/yhys.php?url="
+    },
+    {
+        "name": "qiyi",
+        "parse": "http://laohu.cool/yhys.php?url=",
+        "parse2": "http://laohu.cool/yhys.php?url="
+    },
+    {
+        "name": "pptv",
+        "parse": "http://laohu.cool/yhys.php?url=",
+        "parse2": "http://laohu.cool/yhys.php?url="
+    },
+    {
+        "name": "sohu",
+        "parse": "http://laohu.cool/yhys.php?url=",
+        "parse2": "http://laohu.cool/yhys.php?url="
+    },
+    {
+        "name": "letv",
+        "parse": "http://laohu.cool/yhys.php?url=",
+        "parse2": "http://laohu.cool/yhys.php?url="
+    },
+    {
+        "name": "migu",
+        "parse": "http://laohu.cool/yhys.php?url=",
+        "parse2": "http://laohu.cool/yhys.php?url="
+    },
+    {
+        "name": "tudou",
+        "parse": "http://laohu.cool/yhys.php?url=",
+        "parse2": "http://laohu.cool/yhys.php?url="
+    },
+    {
+        "name": "bilibili",
+        "parse": "http://laohu.cool/yhys.php?url=",
+        "parse2": "http://laohu.cool/yhys.php?url="
+    },
+    
+    
+    
+    {
+        "name": "xc",
+        "parse": "http://th.mmhkj.xyz/home/api?type=ys&uid=2839675&key=ckmoqsuvwBEJMUZ257&tm=1657713702841&url=",
+        "parse2": "http://laohu.cool/yhys.php?url="
+    },
+    {
+        "name": "ningyou",
+        "parse": "https://json.e4tv.cn/?url=",
+        "parse2": "https://json.e4tv.cn/?url="
+    },
+    {
+        "name": "PPX",
+        "parse": "http://jx.ppxzy.top/home/api?type=ys&uid=2754924&key=dfhlopvwABFGHKPW67&url=",
+        "parse2": "http://laohu.cool/yhys.php?url="
+    },
+    {
+        "name": "duoduozy",
+        "parse": "http://htp.behds.cn/hrjx.php?url=",
+        "parse2": "https://rx.bt5v.com/json/jsonindex.php/?url="
+    },
+    {
+        "name": "renrenmi",
+        "parse": "http://121.4.51.101:86/api/?key=gXsTEqPWSHF9bbBzjn&url=",
+        "parse2": "http://110.42.1.95:7768/api.php?from=renrenmi&url="
+    },
+    {
+        "name": "ltnb",
+        "parse": "http://47.98.234.2:7768/api.php?from=ltnb&url=",
+        "parse2": "http://laohu.cool/yhys.php?url="
+    },
+    {
+        "name": "Glory",
+        "parse": "http://ryjx.kfvideos.com/api/?key=IQ5W3WIWB9HYpn97kk&url=",
+        "parse2": "http://ryjx.kfvideos.com/api/?key=MJjML3oKeWeoUv3ohl&url="
+    },
+    {
+        "name": "miaoparty",
+        "parse": "https://rx.bt5v.com/json/jsonindex.php/?url=",
+        "parse2": "https://rx.bt5v.com/json/jsonindex.php/?url="
+    },
+    {
+        "name": "miaoparty2",
+        "parse": "https://rx.bt5v.com/json/jsonindex.php/?url=",
+        "parse2": "https://rx.bt5v.com/json/jsonindex.php/?url="
+    },
+    {
+        "name": "miaoparty3",
+        "parse": "https://rx.bt5v.com/json/jsonindex.php/?url=",
+        "parse2": "https://rx.bt5v.com/json/jsonindex.php/?url="
+    },
+    {
+        "name": "laodiyun",
+        "parse": "https://rx.bt5v.com/json/jsonindex.php/?url=",
+        "parse2": "https://rx.bt5v.com/json/jsonindex.php/?url="
+    },
+    {
+        "name": "laodi",
+        "parse": "https://rx.bt5v.com/json/jsonindex.php/?url=",
+        "parse2": "https://rx.bt5v.com/json/jsonindex.php/?url="
+    },
+    {
+        "name": "laodim3u8",
+        "parse": "https://rx.bt5v.com/json/jsonindex.php/?url=",
+        "parse2": "https://rx.bt5v.com/json/jsonindex.php/?url="
+    },
+    {
+        "name": "lekanzyw",
+        "parse": "https://api.xkvideo.design/lekan.php?url=",
+        "parse2": "https://rx.bt5v.com/json/jsonindex.php/?url="
+    },
+    {
+        "name": "rx",
+        "parse": "http://47.98.234.2:7768/api.php?from=rx&url=",
+        "parse2": "http://rxjx.kuanjv.com/allm3u8.php?url="
+    },
+    {
+        "name": "1920l",
+        "parse": "http://json.1920lgzy.top/home/api?type=ys&uid=11380&key=abelorstuvBCDHKN49&url=",
+        "parse2": "http://json.1920lgzy.top/home/api?type=ys&uid=11380&key=abelorstuvBCDHKN49&url="
+    },
+    {
+        "name": "CL4K",
+        "parse": "http://jx.yjhan.com:8090/home/api?type=ys&uid=114899&key=ijqrstxBGIJKMP0258&url=",
+        "parse2": "http://jx.yjhan.com:8090/home/api?type=ys&uid=213504&key=aefhjkqrtDHIPRSVWZ&url="
+    },
+    {
+        "name": "fuckapp",
+        "parse": "https://rx.bt5v.com/json/jsonindex.php/?url=",
+        "parse2": "https://rx.bt5v.com/json/jsonindex.php/?url="
+    },
+    {
+        "name": "1080P",
+        "parse": "https://hzhcbkj.cn/1199/json.php?uid=",
+        "parse2": "https://hzhcbkj.cn/1199/json.php?uid="
+    },
+    {
+        "name": "xfyun",
+        "parse": "https://rx.bt5v.com/json/jsonindex.php/?url=",
+        "parse2": "https://rx.bt5v.com/json/jsonindex.php/?url="
+    },
+    {
+        "name": "VIP",
+        "parse": "https://rx.bt5v.com/json/jsonindex.php/?url=",
+        "parse2": "http://sf.baozi66.top:66/API.php?url="
+    },
+    {
+        "name": "xueren",
+        "parse": "http://47.98.234.2:7768/api.php?from=xueren&url=",
+        "parse2": "https://rx.bt5v.com/json/jsonindex.php/?url="
+    },
+    {
+        "name": "wuduzy",
+        "parse": "http://47.98.234.2:7768/api.php?from=wuduzy&url=",
+        "parse2": "https://rx.bt5v.com/json/jsonindex.php/?url="
+    }
+    ]
+//https://playmv.vip/json1.php?url=

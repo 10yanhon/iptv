@@ -49,12 +49,12 @@ http://39.135.138.58:18890/PLTV/88888888/224/3221225937/index.m3u8
 http://39.135.138.58:18890/PLTV/88888888/224/3221225694/index.m3u8
 #EXTINF:-1 group-title="央视" tvg-logo="https://epg.112114.xyz/logo/新华英语.png",新华英语高清
 http://39.135.138.58:18890/PLTV/88888888/224/3221225693/index.m3u8
-#EXTINF:-1 group-title="影视" tvg-logo="https://epg.112114.xyz/logo/CHC动作电影.png",CHC动作电影高清
-http://59.49.41.41/live.aishang.ctlcdn.com/00000110240324_1/playlist.m3u8?CONTENTID=00000110240324_1
-#EXTINF:-1 group-title="影视" tvg-logo="https://epg.112114.xyz/logo/CHC家庭影院.png",CHC家庭影院高清
-http://59.49.41.41/live.aishang.ctlcdn.com/00000110240323_1/playlist.m3u8?CONTENTID=00000110240323_1
-#EXTINF:-1 group-title="影视" tvg-logo="https://epg.112114.xyz/logo/CHC高清电影.png",CHC高清电影
-http://59.49.41.41/live.aishang.ctlcdn.com/00000110240325_1/playlist.m3u8?CONTENTID=00000110240325_1
+#EXTINF:-1 group-title="电影" tvg-logo="https://epg.112114.xyz/logo/CHC动作.png",CHC动作高清
+http://[2409:8087:7000:20:1000::22]:6060/yinhe/2/ch00000090990000002055/index.m3u8?virtualDomain=yinhe.live_hls.zte.com
+#EXTINF:-1 group-title="电影" tvg-logo="https://epg.112114.xyz/logo/CHC家庭影院.png",CHC家庭影院高清
+http://[2409:8087:7000:20:1000::22]:6060/yinhe/2/ch00000090990000002085/index.m3u8?virtualDomain=yinhe.live_hls.zte.com
+#EXTINF:-1 group-title="电影" tvg-logo="https://epg.112114.xyz/logo/CHC电影.png",CHC电影高清
+http://[2409:8087:7000:20:1000::22]:6060/yinhe/2/ch00000090990000002065/index.m3u8?virtualDomain=yinhe.live_hls.zte.com
 #EXTINF:-1 group-title="卫视" tvg-logo="https://epg.112114.xyz/logo/湖南卫视.png",湖南卫视高清
 http://39.135.138.58:18890/PLTV/88888888/224/3221225704/index.m3u8
 #EXTINF:-1 group-title="卫视" tvg-logo="https://epg.112114.xyz/logo/江苏卫视.png",江苏卫视高清

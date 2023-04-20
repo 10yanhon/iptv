@@ -1,9 +1,9 @@
 //多线路源
 //自用
 {"urls": [
-{"url": "","name":"🍎3.16更新"},
-{"url": "https://ghproxy.com/https://raw.githubusercontent.com/w1915591935/TVBOX-/main/TVBox/一木自用.json","name":"🍎一木主用"},
-{"url": "http://gitcdn.top/https://raw.githubusercontent.com/xianyuyimu/TVBOX-/main/TVBox/备用.json","name":"🍎一木备用"},
+{"url": "","name":"🍎4.16更新"},
+{"url": "https://ghproxy.com/https://raw.githubusercontent.com/w1915591935/TVBOX-/main/TVBox/自用.json","name":"🍎主用"},
+{"url": "http://gitcdn.top/https://raw.githubusercontent.com/xianyuyimu/TVBOX-/main/TVBox/备用.json","name":"🍎备用"},
 {"url": "http://饭太硬.ga/tv","name":"🚀饭太硬"},
 {
 			"url": "https://hutool.ml/tang",

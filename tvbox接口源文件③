@@ -1,5 +1,10 @@
+//以下全部出自网络，如有冒犯请联系删除。[所有内容仅供学习使用，请勿用于违法用途]
+
 {
-"sites":[
+	"spider": "https://agit.ai/Yoursmile7/TVBox/raw/branch/master/Yoursmile.jar;md5;613066B0150C902B3D51BDE7A433BE83",
+	"wallpaper": "https://tuapi.eees.cc/api.php?category=fengjing&type=302",
+
+	"sites":[
 {"key":"YQK_spider","name","api":"csp_YQKAPP","type":3,"filterable":1,"quickSearch":1,"searchable":1,"ext":"https://api-tx.shumaxc.xyz"},
 {"key":"百影视频","name":,"type":3,"api":"csp_MianHua","searchable":1,"playerType":2,"quickSearch":1,"filterable":0,"ext":"http://47.104.99.175"},
 {"key":"LiteApple","name":,"type":3,"api":"csp_LiteApple","searchable":1,"quickSearch":1,"filterable":1},

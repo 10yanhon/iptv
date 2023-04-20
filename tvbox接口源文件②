@@ -3,6 +3,7 @@
 "wallpaper":"http://饭太硬.ga/深色壁纸/api.php",
 
 "sites":[
+{"key":"csp_apple","name":"🍎苹果┃App","type":3,"api":"csp_LiteApple","playerType":1,"searchable":1,"quickSearch":1,"filterable":1},
 {"key":"csp_77","name":"👒七七┃App","type":3,"api":"csp_Kunyu77","searchable":1,"quickSearch":1,"filterable":1},
 {"key":"直播","name":"📡电视┃直播","type":3,"playerType":1,"api":"https://agit.ai/fantaiying/fty/raw/branch/master/JS/js/直播转点播.js","ext":"Box醒人室$https://agit.ai/fantaiying/fty/raw/branch/master/live.txt#影视范精选$https://agit.ai/fantaiying/fmm/raw/branch/main/tv/m3u/global.m3u&&&https://api.caonm.net/api/mc/"},
 {"key":"csp_Alist1","name":"🅿Alist┃网盘","type":3,"api":"csp_AList","searchable":1,"quickSearch":0,"filterable":0,"ext":"http://饭太硬.ga/x/json/alist.json"},
@@ -16,7 +17,6 @@
 {"key":"csp_AppTT","name":"🐰图图┃App","type":3,"api":"csp_AppTT","m3u8ads": "hd.youyhn.com","searchable":1,"quickSearch":1,"filterable":1,"ext":"tv$$$dlJYWXFYbkgqbmlsU1JLIyNkMFZ0OE1JdzRJQW1yY3I=$$$Y2hpbkpaUzdiKnpYbzZzWQ==$$$aHR0cDovL2FwaS50dDU4LnR2L2NvbmZpZy9uZXd0di5qc29uP3NzPQ=="},
 {"key":"csp_FanYY","name":"💦剥饭┃4K","type":3,"api":"csp_FanYY","searchable":1,"quickSearch":1,"filterable":1,"ext":"http://ali.饭太硬.ml/alitoken"},
 {"key":"csp_BuLei","name":"💢布雷┃直连","type":3,"api":"csp_BuLei","m3u8ads": "hd.youyhn.com","searchable":1,"quickSearch":1,"filterable":1},
-{"key":"csp_apple","name":"🍎苹果┃App","type":3,"api":"csp_LiteApple","playerType":1,"searchable":1,"quickSearch":1,"filterable":1},
 {"key":"csp_Lib","name": "🌟利奥┃直连","type": 3,"api": "csp_Libvio","searchable": 1,"quickSearch": 1,"filterable": 1,"ext":"https://tv.libvio.cc/"},
 {"key":"csp_fantuan","name":"🍙饭团┃直连","type":3,"api":"csp_Fantuan","m3u8ads": "hd.youyhn.com","searchable":1,"quickSearch":1,"filterable":1,"ext":"https://www.fantuanhd.com"},
 {"key":"csp_Vofl","name":"🎈Vofl┃直连","type":3,"api":"csp_Voflix","searchable":1,"quickSearch":1,"filterable":1},

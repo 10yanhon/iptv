@@ -134,26 +134,6 @@
   },
 
 
-
-
-  "sites": [{
-    "key": "djdjs",
-    "name": "🙀一木缝合源║12.22更新",
-    "type": 3,
-    "api": "",
-    "searchable": 1,
-    "quickSearch": 1,
-    "filterable": 1
-  },
-    {
-      "key": "3",
-      "name": "🙀仅供自用",
-      "type": 3,
-      "api": "",
-      "searchable": 1,
-      "quickSearch": 1,
-      "filterable": 1
-    },
     {
       "key": "douban",
       "name": "🔍豆瓣榜单1〔不要勾选〕",

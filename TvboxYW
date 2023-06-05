@@ -1,14 +1,14 @@
 {
     "sites": [
         {
-            "key": "dr_豆瓣",
-            "name": "🔍豆瓣",
+            "key": "csp_apple",
+            "name": "小苹果",
             "type": 3,
-            "api": "https://github.com/10yanhon/iptv/new/main",
-            "ext": "https://github.com/10yanhon/iptv/new/main",
-            "searchable": 0,
-            "quickSearch": 0,
-            "filterable": 0
+            "api": "csp_LiteApple",
+            "playerType": 1,
+            "searchable": 1,
+            "quickSearch": 1,
+            "filterable": 1
         },
         {
             "key": "csp_Bili",
@@ -249,16 +249,6 @@
             "quickSearch": 1,
             "filterable": 1,
             "ext": "https://www.fantuanhd.com"
-        },
-        {
-            "key": "csp_apple",
-            "name": "小苹果",
-            "type": 3,
-            "api": "csp_LiteApple",
-            "playerType": 1,
-            "searchable": 1,
-            "quickSearch": 1,
-            "filterable": 1
         },
         {
             "key": "csp_Bd",

@@ -319,6 +319,7 @@
 ]}]}],
 "flags":["youku","qq","iqiyi","qiyi","letv","sohu","tudou","pptv","mgtv","wasu","bilibili","renrenmi"],
 "ijk":[
+{
 var rule = {
     title:'JRKAN直播',
     host:'http://www.jrkankan.com/?lan=1',

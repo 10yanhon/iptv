@@ -1,3 +1,6 @@
+{
+"wallpaper":"https://picsum.photos/1280/720/?blur=10",
+"spider":"https://raw.iqiq.io/liu673cn/box/main/sub/jar/209.jar;md5;18D26913107F18900630BF4CB1553ADB",
 "sites": [
 {"key":"csp_Kunyu77","name":"🌤酷云七七","type":3,"api":"csp_Kunyu77","searchable":1,"quickSearch":1,"filterable":1},
 {"key":"csp_AppTT","name":"🐰图图影视","type":3,"api":"csp_AppTT","searchable":1,"quickSearch":1,"filterable":1},

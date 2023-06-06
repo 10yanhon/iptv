@@ -203,3 +203,28 @@ http://[2409:8087:7000:20:1000::22]:6060/yinhe/2/ch00000090990000002065/index.m3
 https://jwliveqxzb.hebyun.com.cn/pqzh/pqzh.m3u8
 #EXTINF:-1 tvg-id="" tvg-name="" tvg-logo="https://upload.112114.xyz/logo/平泉影视频道.png" group-title="地方",平泉影视频道
 https://jwliveqxzb.hebyun.com.cn/pqys/pqys.m3u8
+鳳凰資訊台，https://pull-l3-cny.douyincdn.com/live/YesLiveTV-202b7a2e-92ad-420e-bc9e-401937c12c7b.m3u8
+TVB 翡翠台，http://r.jdshipin.com/n90gt
+香港TVB娱乐新闻台，http://185.243.7.13:80/play/live.php?mac=00:1A:79:45:5E:9A&stream=571188&extension=ts&play_token=HnxccIWiNo
+香港TVBSHD，http://185.243.7.13:80/play/live.php?mac=00:1A:79:45:5E:9A&stream=156402&extension=ts&play_token=UEKTIim7lP
+香港TVB明珠台，http://r.jdshipin.com/ZQ4kN
+香港TVB星河台，http://185.243.7.13:80/play/live.php?mac=00:1A:79:45:5E:9A&stream=571186&extension=ts&play_token=HnxccIWiNo
+凤凰卫视香港台，http://lcx-olt.8866.org:8181/tsfile/live/1071_1.m3u8
+香港有线新闻台，http://61.10.2.141/live_freedirect/freehd209_h.live/playlist.m3u
+美亚电影台，http://198.16.100.90:8278/meiyamovie_twn/playlist.m3u8?tid=MD3D6323299363232993&ct=18392&tsum=3f73f541d33abe71140d28ada99a071b
+韩国-NBS，https://media.joycorp.co.kr:4443/live/live_720p/playlist.m3u8
+韩国-EBS1，http://ebsonairios.ebs.co.kr/groundwavefamilypc/familypc1m/playlist.m3u8
+韩国-Arirang台，http://amdlive-ch01.ctnd.com.edgesuite.net/arirang_1ch/smil:arirang_1ch.smil/playlist.m3u8
+台视，http://162.19.247.76:22222/live/taishi/index.m3u8
+台湾中视，http://162.19.247.76:22222/live/zhongshi/index.m3u8
+东森戏剧，http://162.19.247.76:22222/live/dsxj/index.m3u8
+东森电影，http://162.19.247.76:22222/live/dsdyt/index.m3u8
+东森洋片，http://162.19.247.76:22222/live/dsypt/index.m3u8
+华视，http://162.19.247.76:22222/live/huashi/index.m3u8
+中天娱乐，http://162.19.247.76:22222/live/ztyl/index.m3u8
+俄罗斯中文台，http://brics.bonus-tv.ru/cdn/brics/chinese/tracks-v1a1/index.m3u8
+寰宇新聞台，http://tv.redrainl.site:9500/live.m3u8?c=22
+美国CNBC，http://61.221.81.93:8078/hls/24/80/cnbc90.m3u8
+韩国SBS，http://1.245.74.5:1935/live/tv/.m3u8
+HBO，http://185.188.188.235/live/hbo/playlist.m3u8
+TVBS亚洲，http://38.64.72.148:80/hls/modn/list/4005/chunklist1.m3u8

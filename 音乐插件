@@ -1,4 +1,5 @@
 {"plugins":
+https://gitee.com/maotoumao/MusicFreePlugins/raw/master/plugins.json
 [{"name":"5sing","url":"https://gitee.com/maotoumao/MusicFreePlugins/raw/v0.1/dist/5sing/index.js","version":"0.1.1"},
 {"name":"酷狗","url":"https://gitee.com/maotoumao/MusicFreePlugins/raw/v0.1/dist/kugou/index.js","version":"0.1.4"},
 {"name":"bilibili","url":"https://gitee.com/maotoumao/MusicFreePlugins/raw/v0.1/dist/bilibili/index.js","version":"0.1.7"},

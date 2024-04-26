@@ -1,0 +1,33 @@
+{
+  "apkFileName": "Hi tao_v3(1.2).apk",
+  "VersionInfo": {
+    "versionName": "3",
+    "versionCode": "1"
+  },
+  "UsesFramework": {
+    "ids": [1],
+    "tag": null
+  },
+  "unknownFiles": {},
+  "PackageInfo": {
+    "forcedPackageId": "127",
+    "renameManifestPackage": null
+  },
+  "doNotCompress": [
+    "resources.arsc",
+    "assets/www/add.js",
+    "assets/www/name.md",
+    "assets/www/ver.md",
+    "assets/www/vip.md",
+    "assets/www/www.zip",
+    "png",
+    "gif",
+    "jpg"
+  ],
+  "isFrameworkApk": false,
+  "compressionType": false,
+  "sparseResources": true,
+  "version": "2.4.0-211111",
+  "sharedLibrary": false,
+  "sdkInfo": {"minSdkVersion": "8"}
+}

@@ -40,7 +40,13 @@ CCTV-15,http://[2409:8087:1e01:20::3]/PLTV/11/224/3221226147/1.m3u8
 CCTV-16,http://[2409:8087:1e01:20::3]/PLTV/11/224/3221226120/1.m3u8
 
 CCTV-17,http://[2409:8087:2001:20:2800:0:df6e:eb17]/ott.mobaibox.com/PLTV/88888888/224/3221227592/index.m3u8
-
+央视台球,http://183.11.239.36:808/hls/73/index.m3u8
+央视台球,http://dassby.qqff.top:99/live/高尔夫网球/index.m3u8
+第一剧场,http://dassby.qqff.top:99/live/第一剧场/index.m3u8
+风云足球,http://183.11.239.36:808/hls/133/index.m3u8
+风云足球,http://dassby.qqff.top:99/live/风云足球/index.m3u8
+世界地理,http://183.11.239.36:808/hls/11/index.m3u8
+世界地理,http://dassby.qqff.top:99/live/世界地理/index.m3u8
 CGTN,https://0472.org/hls/cgtn.m3u8
 
 CGTN纪录,https://0472.org/hls/cgtnd.m3u8

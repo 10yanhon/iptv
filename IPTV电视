@@ -26,18 +26,14 @@ CCTV-10,http://[2409:8087:1e01:20::3]/PLTV/11/224/3221226169/1.m3u8
 CCTV-10,http://[2409:8087:7001:20:3::2]:80/dbiptv.sn.chinamobile.com/PLTV/88888888/224/3221226189/index.m3u8
 CCTV-11,http://[2409:8087:2001:20:2800:0:df6e:eb23]/ott.mobaibox.com/PLTV/88888888/224/3221228289/index.m3u8
 CCTV-11,http://[2409:8087:1e01:20::3]/PLTV/11/224/3221226101/1.m3u8
-CCTV-10,https://zby.130519.xyz/PLTV/11/224/3221225743/index.m3u8?
-CCTV-10,https://zby.130519.xyz/PLTV/11/224/3221226169/index.m3u8?
-CCTV-11,https://zby.130519.xyz/PLTV/11/224/3221226101/index.m3u8?
-CCTV-11,https://zby.130519.xyz/PLTV/11/224/3221226145/index.m3u8?
-CCTV-12,https://zby.130519.xyz/PLTV/11/224/3221226103/index.m3u8?
-CCTV-12,https://zby.130519.xyz/PLTV/11/224/3221226126/index.m3u8?
-
-CCTV-14,https://zby.130519.xyz/PLTV/11/224/3221225738/index.m3u8?
-CCTV-14,https://zby.130519.xyz/PLTV/11/224/3221226150/index.m3u8?
-CCTV-15,https://zby.130519.xyz/PLTV/11/224/3221226147/index.m3u8?
-CCTV-16,https://zby.130519.xyz/PLTV/11/224/3221226120/index.m3u8?
-
+CCTV-10:https://tv.cctv.com/live/cctv10/
+CCTV-11:https://tv.cctv.com/live/cctv11/
+CCTV-12:https://tv.cctv.com/live/cctv12/
+CCTV-14:https://tv.cctv.com/live/cctvchild/
+CCTV-15:https://tv.cctv.com/live/cctv15/
+CCTV-16:https://yangshipin.cn/tv/home?pid=600099502
+CCTV-4(欧洲):https://tv.cctv.com/live/cctveurope/
+CCTV-4(美洲)https://tv.cctv.com/live/cctvamerica
 CCTV-12,http://[2409:8087:2001:20:2800:0:df6e:eb22]/ott.mobaibox.com/PLTV/88888888/224/3221228401/index.m3u8
 CCTV-12,http://[2409:8087:1e01:20::3]/PLTV/11/224/3221226103/1.m3u8
 

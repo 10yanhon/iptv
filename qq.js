@@ -85,10 +85,11 @@ async function searchBase(query, page, type) {
             cv: "1859",
             uin: "0",
         },
-        req: {
+        req_1: {
             method: "DoSearchForQQMusicDesktop",
             module: "music.search.SearchCgiService",
             param: {
+                remoteplace: "txt.yqq.song",
                 grp: 1,
                 num_per_page: pageSize,
                 page_num: safePage,
@@ -112,7 +113,7 @@ async function searchBase(query, page, type) {
     })).data;
 
     // QQ 闊充箰涓嶅悓鏃堕棿鐨勬帴鍙ｈ繑鍥炶繃 req / req_0 / req_1 涓夌澶栧眰鍚嶇О锛屽叏閮ㄥ吋瀹广€�
-    const block = response && (response.req || response.req_0 || response.req_1);
+    const block = response && (response.req_1 || response.req || response.req_0);
     const data = (block && block.data) || {};
     const body = data.body || {};
 
@@ -121,8 +122,8 @@ async function searchBase(query, page, type) {
     }
 
     const key = searchTypeMap[safeType] || "song";
-    const node = body[key] || {};
-    const list = Array.isArray(node.list) ? node.list : [];
+    const node = body[key] || body.item_song || body.item_album || body.item_singer || {};
+    const list = Array.isArray(node.list) ? node.list : (Array.isArray(node) ? node : []);
     const total = Number((data.meta && data.meta.sum) || node.total || 0);
 
     return {

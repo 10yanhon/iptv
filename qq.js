@@ -78,33 +78,31 @@ const validSongFilter = (item) => {
 async function searchBase(query, page, type) {
     const safePage = Math.max(1, Number(page) || 1);
     const safeType = Number(type) || 0;
+    const keyword = String(query || "").trim();
 
-    const payload = {
-        comm: {
-            ct: "19",
-            cv: "1859",
-            uin: "0",
-        },
-        req_1: {
+    const searchPayload = {
+        "music.search.SearchCgiService": {
             method: "DoSearchForQQMusicDesktop",
             module: "music.search.SearchCgiService",
             param: {
-                remoteplace: "txt.yqq.song",
-                grp: 1,
+                remoteplace: "txt.mqq.all",
+                searchid: String(Date.now()) + String(Math.floor(Math.random() * 100000)),
                 num_per_page: pageSize,
                 page_num: safePage,
-                query: String(query || ""),
+                query: keyword,
                 search_type: safeType,
+                highlight: 1,
+                grp: 1,
             },
         },
     };
 
     const response = (await (0, axios_1.default)({
-        url: "https://u.y.qq.com/cgi-bin/musicu.fcg",
+        url: "https://u.y.qq.com/cgi-bin/musicu.fcg?_webcgikey=DoSearchForQQMusicDesktop&_=" + Date.now(),
         method: "POST",
-        data: payload,
+        data: searchPayload,
         headers: Object.assign(Object.assign({}, headers), {
-            "Content-Type": "application/json;charset=utf-8",
+            "Content-Type": "application/json;charset=UTF-8",
             Accept: "application/json, text/plain, */*",
         }),
         timeout: 15000,
@@ -112,22 +110,61 @@ async function searchBase(query, page, type) {
         withCredentials: true,
     })).data;
 
-    // QQ 闊充箰涓嶅悓鏃堕棿鐨勬帴鍙ｈ繑鍥炶繃 req / req_0 / req_1 涓夌澶栧眰鍚嶇О锛屽叏閮ㄥ吋瀹广€�
-    const block = response && (response.req_1 || response.req || response.req_0);
-    const data = (block && block.data) || {};
-    const body = data.body || {};
-
-    if (block && Number(block.code) !== 0) {
-        throw new Error(`QQ闊充箰鎼滅储鎺ュ彛閿欒: ${block.code}`);
+    // 褰撳墠 QQ 鎼滅储鎺ュ彛鐨勮繑鍥炶妭鐐规槸鍥哄畾鐨勶細
+    // music.search.SearchCgiService.data.body
+    const service = response && response["music.search.SearchCgiService"];
+    if (!service || (service.code !== undefined && Number(service.code) !== 0)) {
+        throw new Error("QQ闊充箰鎼滅储鎺ュ彛杩斿洖寮傚父");
     }
 
-    const key = searchTypeMap[safeType] || "song";
-    const node = body[key] || body.item_song || body.item_album || body.item_singer || {};
-    const list = Array.isArray(node.list) ? node.list : (Array.isArray(node) ? node : []);
-    const total = Number((data.meta && data.meta.sum) || node.total || 0);
+    const data = service.data || {};
+    const body = data.body || {};
+
+    const keyMap = {
+        0: ["song"],
+        1: ["singer", "artist"],
+        2: ["album"],
+        3: ["songlist", "playlist"],
+        7: ["song", "item_song"],
+        12: ["mv"],
+    };
+
+    const keys = keyMap[safeType] || [searchTypeMap[safeType] || "song"];
+    let list = [];
+
+    for (const key of keys) {
+        const node = body[key];
+        if (node && Array.isArray(node.list)) {
+            list = node.list;
+            if (list.length) break;
+        }
+    }
+
+    // 鍏煎 QQ 鏌愪簺鐗堟湰鐨� item_song/item_album/item_singer 鍛藉悕銆�
+    if (!list.length) {
+        const fallbackKeys = [
+            `item_${keys[0]}`,
+            safeType === 1 ? "item_singer" : "",
+            safeType === 2 ? "item_album" : "",
+            safeType === 3 ? "item_songlist" : "",
+        ].filter(Boolean);
+        for (const key of fallbackKeys) {
+            const node = body[key];
+            if (node && Array.isArray(node.list)) {
+                list = node.list;
+                if (list.length) break;
+            }
+        }
+    }
+
+    const total = Number(
+        (data.meta && (data.meta.sum || data.meta.estimate_sum)) ||
+        (body[keys[0]] && (body[keys[0]].total || body[keys[0]].total_num)) ||
+        list.length
+    );
 
     return {
-        isEnd: total > 0 ? total <= safePage * pageSize : list.length < pageSize,
+        isEnd: total <= safePage * pageSize,
         data: list,
     };
 }

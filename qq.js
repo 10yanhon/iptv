@@ -17,6 +17,8 @@ function formatMusicItem(_) {
             _.mediaMid ||
             (_.file && _.file.media_mid) ||
             undefined,
+        file: _.file || undefined,
+        pay: _.pay || undefined,
         title: _.title || _.songname,
         artist: (Array.isArray(_.singer) ? _.singer : []).map((s) => s.name).filter(Boolean).join(", "),
         artwork: albummid
@@ -81,18 +83,18 @@ async function searchBase(query, page, type) {
 
     const payload = {
         comm: {
-            ct: "19",
-            cv: "1859",
-            uin: "0",
+            ct: 24,
+            cv: 0,
+            uin: 0,
         },
         req: {
             method: "DoSearchForQQMusicDesktop",
             module: "music.search.SearchCgiService",
             param: {
                 grp: 1,
-                num_per_page: pageSize,
+                num_per_page: 50,
                 page_num: safePage,
-                query: String(query || ""),
+                query: String(query || "").trim(),
                 search_type: safeType,
             },
         },
@@ -111,22 +113,48 @@ async function searchBase(query, page, type) {
         withCredentials: true,
     })).data;
 
-    // QQ 闊充箰涓嶅悓鏃堕棿鐨勬帴鍙ｈ繑鍥炶繃 req / req_0 / req_1 涓夌澶栧眰鍚嶇О锛屽叏閮ㄥ吋瀹广€�
-    const block = response && (response.req || response.req_0 || response.req_1);
-    const data = (block && block.data) || {};
-    const body = data.body || {};
+    // QQ闊充箰鎼滅储鎺ュ彛瀹為檯浣跨敤 service/module 鍚嶄綔涓鸿繑鍥炶妭鐐癸紝鏃х増鏈墠鏈� req_1銆�
+    const block =
+        response?.["music.search.SearchCgiService"] ||
+        response?.req ||
+        response?.req_0 ||
+        response?.req_1 ||
+        {};
 
-    if (block && Number(block.code) !== 0) {
+    const data = block.data || {};
+    const body = data.body || {};
+    const key = searchTypeMap[safeType] || "song";
+
+    // 褰撳墠/鍘嗗彶鎺ュ彛瀛樺湪 body.song銆乥ody.item_song 绛変笉鍚岀粨鏋勩€�
+    const candidates = [
+        body[key],
+        body[`item_${key}`],
+        body.song,
+        body.item_song,
+    ];
+
+    let node = {};
+    for (const item of candidates) {
+        if (item && Array.isArray(item.list)) {
+            node = item;
+            break;
+        }
+    }
+
+    const list = Array.isArray(node.list) ? node.list : [];
+    const total = Number(
+        data?.meta?.sum ||
+        node.total ||
+        node.total_num ||
+        0
+    );
+
+    if (Number(block.code) && Number(block.code) !== 0) {
         throw new Error(`QQ闊充箰鎼滅储鎺ュ彛閿欒: ${block.code}`);
     }
 
-    const key = searchTypeMap[safeType] || "song";
-    const node = body[key] || {};
-    const list = Array.isArray(node.list) ? node.list : [];
-    const total = Number((data.meta && data.meta.sum) || node.total || 0);
-
     return {
-        isEnd: total > 0 ? total <= safePage * pageSize : list.length < pageSize,
+        isEnd: total > 0 ? total <= safePage * 50 : list.length < 50,
         data: list,
     };
 }
@@ -135,7 +163,9 @@ async function searchMusic(query, page) {
     const songs = await searchBase(query, page, 0);
     return {
         isEnd: songs.isEnd,
-        data: songs.data.filter(validSongFilter).map(formatMusicItem),
+        // 鎼滅储缁撴灉涓嶅啀鎸� pay_play 杩囨护銆傝繖鏍� MusicFree 鑳界湅鍒� QQ 瀹樻柟鎼滅储杩斿洖鐨勫畬鏁寸粨鏋滐紝
+        // 鍖呮嫭浼氬憳/鏀惰垂姝屾洸锛涙槸鍚﹀彲鐩存帴鎾斁鐢� QQ 鐨� Vkey 鎺ュ彛鏈€缁堝喅瀹氥€�
+        data: songs.data.map(formatMusicItem),
     };
 }
 async function searchAlbum(query, page) {
@@ -231,31 +261,31 @@ const typeMap = {
         e: ".flac",
     },
 };
-async function getSourceUrl(id, type = "128") {
-    const songmid = String(id || "");
-    const guid = "10000";
+async function getSourceUrl(songmid, mediaMid, type = "128") {
+    const songId = String(songmid || "");
+    const mediaId = String(mediaMid || songId);
+    const guid = String(Math.floor(Math.random() * 9000000) + 1000000);
     const typeObj = typeMap[type] || typeMap["128"];
 
-    // 2025.9 涔嬪悗浠嶅湪浣跨敤鐨勮姹傛牸寮忥細鏂囦欢鍚嶆寜 songmid 閲嶅鎷兼帴銆�
-    const file = `${typeObj.s}${songmid}${songmid}${typeObj.e}`;
+    // QQ 闊充箰鎾斁鏂囦欢浣跨敤 media_mid锛屼笉鏄� songmid銆�
+    const file = `${typeObj.s}${mediaId}${typeObj.e}`;
 
     const data = {
-        req_1: {
+        req_0: {
             module: "vkey.GetVkeyServer",
             method: "CgiGetVkey",
             param: {
                 filename: [file],
-                guid: guid,
-                songmid: [songmid],
+                guid,
+                songmid: [songId],
                 songtype: [0],
                 uin: "0",
                 loginflag: 1,
                 platform: "20",
             },
         },
-        loginUin: "0",
         comm: {
-            uin: "0",
+            uin: 0,
             format: "json",
             ct: 24,
             cv: 0,
@@ -265,7 +295,7 @@ async function getSourceUrl(id, type = "128") {
     return (await (0, axios_1.default)({
         url: "https://u.y.qq.com/cgi-bin/musicu.fcg",
         method: "POST",
-        data: data,
+        data,
         headers: Object.assign(Object.assign({}, headers), {
             "Content-Type": "application/json;charset=UTF-8",
             Accept: "application/json, text/plain, */*",
@@ -571,8 +601,10 @@ module.exports = {
         else if (quality === "super") {
             type = "flac";
         }
+
         const result = await getSourceUrl(
             musicItem.songmid,
+            musicItem.media_mid,
             type
         );
 
@@ -620,6 +652,10 @@ module.exports = {
         if (/^https?:\/\//.test(purl)) {
             return {
                 url: purl,
+                quality,
+                headers: {
+                    Referer: "https://y.qq.com/",
+                },
             };
         }
 
@@ -629,6 +665,10 @@ module.exports = {
 
         return {
             url: `${domain}${purl}`,
+            quality,
+            headers: {
+                Referer: "https://y.qq.com/",
+            },
         };
     },
     getLyric,

@@ -17,8 +17,6 @@ function formatMusicItem(_) {
             _.mediaMid ||
             (_.file && _.file.media_mid) ||
             undefined,
-        file: _.file || undefined,
-        pay: _.pay || undefined,
         title: _.title || _.songname,
         artist: (Array.isArray(_.singer) ? _.singer : []).map((s) => s.name).filter(Boolean).join(", "),
         artwork: albummid
@@ -81,21 +79,22 @@ async function searchBase(query, page, type) {
     const safePage = Math.max(1, Number(page) || 1);
     const safeType = Number(type) || 0;
 
+    // QQ 闊充箰妗岄潰绔悳绱㈡帴鍙ｏ細浣跨敤瀹樻柟 service 鍚嶄綔涓鸿姹傝妭鐐广€�
     const payload = {
         comm: {
             ct: 24,
             cv: 0,
             uin: 0,
         },
-        req: {
+        "music.search.SearchCgiService": {
             method: "DoSearchForQQMusicDesktop",
             module: "music.search.SearchCgiService",
             param: {
-                grp: 1,
-                num_per_page: 50,
+                num_per_page: pageSize,
                 page_num: safePage,
                 query: String(query || "").trim(),
                 search_type: safeType,
+                grp: 1,
             },
         },
     };
@@ -105,7 +104,7 @@ async function searchBase(query, page, type) {
         method: "POST",
         data: payload,
         headers: Object.assign(Object.assign({}, headers), {
-            "Content-Type": "application/json;charset=utf-8",
+            "Content-Type": "application/json;charset=UTF-8",
             Accept: "application/json, text/plain, */*",
         }),
         timeout: 15000,
@@ -113,22 +112,22 @@ async function searchBase(query, page, type) {
         withCredentials: true,
     })).data;
 
-    // QQ闊充箰鎼滅储鎺ュ彛瀹為檯浣跨敤 service/module 鍚嶄綔涓鸿繑鍥炶妭鐐癸紝鏃х増鏈墠鏈� req_1銆�
+    // 褰撳墠鎺ュ彛锛歮usic.search.SearchCgiService.data.body.song.list
+    // 鍏煎鏃ф帴鍙ｇ殑 req / req_0 / req_1锛岄伩鍏嶄笉鍚� QQ 鐗堟湰杩斿洖缁撴瀯鍙樺寲瀵艰嚧绌虹粨鏋溿€�
     const block =
-        response?.["music.search.SearchCgiService"] ||
-        response?.req ||
-        response?.req_0 ||
-        response?.req_1 ||
+        (response && response["music.search.SearchCgiService"]) ||
+        (response && response.req) ||
+        (response && response.req_0) ||
+        (response && response.req_1) ||
         {};
 
     const data = block.data || {};
     const body = data.body || {};
     const key = searchTypeMap[safeType] || "song";
 
-    // 褰撳墠/鍘嗗彶鎺ュ彛瀛樺湪 body.song銆乥ody.item_song 绛変笉鍚岀粨鏋勩€�
     const candidates = [
         body[key],
-        body[`item_${key}`],
+        body["item_" + key],
         body.song,
         body.item_song,
     ];
@@ -143,18 +142,21 @@ async function searchBase(query, page, type) {
 
     const list = Array.isArray(node.list) ? node.list : [];
     const total = Number(
-        data?.meta?.sum ||
+        (data.meta && data.meta.sum) ||
         node.total ||
         node.total_num ||
         0
     );
 
-    if (Number(block.code) && Number(block.code) !== 0) {
+    if (block.code !== undefined && Number(block.code) !== 0) {
         throw new Error(`QQ闊充箰鎼滅储鎺ュ彛閿欒: ${block.code}`);
     }
 
     return {
-        isEnd: total > 0 ? total <= safePage * 50 : list.length < 50,
+        isEnd:
+            total > 0
+                ? total <= safePage * pageSize
+                : list.length < pageSize,
         data: list,
     };
 }
@@ -163,8 +165,6 @@ async function searchMusic(query, page) {
     const songs = await searchBase(query, page, 0);
     return {
         isEnd: songs.isEnd,
-        // 鎼滅储缁撴灉涓嶅啀鎸� pay_play 杩囨护銆傝繖鏍� MusicFree 鑳界湅鍒� QQ 瀹樻柟鎼滅储杩斿洖鐨勫畬鏁寸粨鏋滐紝
-        // 鍖呮嫭浼氬憳/鏀惰垂姝屾洸锛涙槸鍚﹀彲鐩存帴鎾斁鐢� QQ 鐨� Vkey 鎺ュ彛鏈€缁堝喅瀹氥€�
         data: songs.data.map(formatMusicItem),
     };
 }
@@ -261,31 +261,39 @@ const typeMap = {
         e: ".flac",
     },
 };
-async function getSourceUrl(songmid, mediaMid, type = "128") {
-    const songId = String(songmid || "");
-    const mediaId = String(mediaMid || songId);
-    const guid = String(Math.floor(Math.random() * 9000000) + 1000000);
+async function getSourceUrl(id, mediaMid, type = "128") {
+    const songmid = String(id || "");
+    const mediaId = String(mediaMid || "");
+    const guid = "10000";
     const typeObj = typeMap[type] || typeMap["128"];
 
-    // QQ 闊充箰鎾斁鏂囦欢浣跨敤 media_mid锛屼笉鏄� songmid銆�
-    const file = `${typeObj.s}${mediaId}${typeObj.e}`;
+    // 浼樺厛浣跨敤 QQ 鎼滅储缁撴灉涓殑 media_mid锛涙病鏈夋椂鍥為€€鍒版棫鐗� songmid 鎷兼帴鏂瑰紡銆�
+    const filenames = [];
+    if (mediaId) {
+        filenames.push(`${typeObj.s}${mediaId}${typeObj.e}`);
+    }
+    const legacyFile = `${typeObj.s}${songmid}${songmid}${typeObj.e}`;
+    if (!filenames.includes(legacyFile)) {
+        filenames.push(legacyFile);
+    }
 
     const data = {
-        req_0: {
+        req_1: {
             module: "vkey.GetVkeyServer",
             method: "CgiGetVkey",
             param: {
-                filename: [file],
-                guid,
-                songmid: [songId],
+                filename: filenames,
+                guid: guid,
+                songmid: [songmid],
                 songtype: [0],
                 uin: "0",
                 loginflag: 1,
                 platform: "20",
             },
         },
+        loginUin: "0",
         comm: {
-            uin: 0,
+            uin: "0",
             format: "json",
             ct: 24,
             cv: 0,
@@ -295,7 +303,7 @@ async function getSourceUrl(songmid, mediaMid, type = "128") {
     return (await (0, axios_1.default)({
         url: "https://u.y.qq.com/cgi-bin/musicu.fcg",
         method: "POST",
-        data,
+        data: data,
         headers: Object.assign(Object.assign({}, headers), {
             "Content-Type": "application/json;charset=UTF-8",
             Accept: "application/json, text/plain, */*",
@@ -601,7 +609,6 @@ module.exports = {
         else if (quality === "super") {
             type = "flac";
         }
-
         const result = await getSourceUrl(
             musicItem.songmid,
             musicItem.media_mid,
@@ -652,10 +659,6 @@ module.exports = {
         if (/^https?:\/\//.test(purl)) {
             return {
                 url: purl,
-                quality,
-                headers: {
-                    Referer: "https://y.qq.com/",
-                },
             };
         }
 
@@ -665,10 +668,6 @@ module.exports = {
 
         return {
             url: `${domain}${purl}`,
-            quality,
-            headers: {
-                Referer: "https://y.qq.com/",
-            },
         };
     },
     getLyric,

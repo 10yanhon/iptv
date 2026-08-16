@@ -18,7 +18,7 @@ function formatMusicItem(_) {
             (_.file && _.file.media_mid) ||
             undefined,
         title: _.title || _.songname,
-        artist: _.singer.map((s) => s.name).join(", "),
+        artist: (Array.isArray(_.singer) ? _.singer : []).map((s) => s.name).filter(Boolean).join(", "),
         artwork: albummid
             ? `https://y.gtimg.cn/music/photo_new/T002R300x300M000${albummid}.jpg`
             : undefined,
@@ -571,18 +571,62 @@ module.exports = {
         else if (quality === "super") {
             type = "flac";
         }
-        const result = await getSourceUrl(musicItem.songmid, type);
-        if (result.req_0 && result.req_0.data && result.req_0.data.midurlinfo) {
-            purl = result.req_0.data.midurlinfo[0].purl;
-        }
+        const result = await getSourceUrl(
+            musicItem.songmid,
+            type
+        );
+
+        // QQ 闊充箰鎺ュ彛瀹為檯鍙兘杩斿洖 req_0銆乺eq_1 鎴� req銆�
+        // 涓婁竴鐗堝彧璇诲彇 req_0锛屽鑷存案杩滄嬁涓嶅埌鎾斁鍦板潃锛孧usicFree 鎵嶄細鍥為€€鍒伴叿鎴戠瓑鍏跺畠闊虫簮銆�
+        const reqBlock =
+            result &&
+            (result.req_0 || result.req_1 || result.req);
+
+        const sourceData =
+            (reqBlock && reqBlock.data) || {};
+
+        const midurlinfo =
+            Array.isArray(sourceData.midurlinfo)
+                ? sourceData.midurlinfo
+                : [];
+
+        const firstUrl = midurlinfo[0] || {};
+
+        purl =
+            firstUrl.purl ||
+            firstUrl.wifiurl ||
+            "";
+
         if (!purl) {
             return null;
         }
+
         if (domain === "") {
+            const sip =
+                Array.isArray(sourceData.sip)
+                    ? sourceData.sip
+                    : [];
+
             domain =
-                result.req_0.data.sip.find((i) => !i.startsWith("http://ws")) ||
-                    result.req_0.data.sip[0];
+                sip.find(
+                    (i) =>
+                        typeof i === "string" &&
+                        !i.startsWith("http://ws")
+                ) ||
+                sip[0] ||
+                "";
         }
+
+        if (/^https?:\/\//.test(purl)) {
+            return {
+                url: purl,
+            };
+        }
+
+        if (!domain) {
+            return null;
+        }
+
         return {
             url: `${domain}${purl}`,
         };

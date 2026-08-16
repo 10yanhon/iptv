@@ -21,6 +21,8 @@ function formatMusicItem(_) {
         lrc: _.lyric || undefined,
         albumid: albumid,
         albummid: albummid,
+        media_mid: _.media_mid || (_.file && _.file.media_mid),
+        file: _.file || undefined,
     };
 }
 function formatAlbumItem(_) {
@@ -63,35 +65,56 @@ const validSongFilter = (item) => {
     return item.pay.pay_play === 0 || item.pay.payplay === 0;
 };
 async function searchBase(query, page, type) {
+    const safePage = Math.max(1, Number(page) || 1);
+    const safeType = Number(type) || 0;
     const res = (await (0, axios_1.default)({
         url: "https://u.y.qq.com/cgi-bin/musicu.fcg",
         method: "POST",
         data: {
-            req_1: {
+            comm: {
+                ct: "19",
+                cv: "1859",
+                uin: "0",
+            },
+            req: {
                 method: "DoSearchForQQMusicDesktop",
                 module: "music.search.SearchCgiService",
                 param: {
+                    grp: 1,
                     num_per_page: pageSize,
-                    page_num: page,
-                    query: query,
-                    search_type: type,
+                    page_num: safePage,
+                    query: String(query || ""),
+                    search_type: safeType,
                 },
             },
         },
-        headers: headers,
+        headers: Object.assign(Object.assign({}, headers), {
+            "Content-Type": "application/json;charset=utf-8",
+            Accept: "application/json, text/plain, */*",
+        }),
+        timeout: 15000,
         xsrfCookieName: "XSRF-TOKEN",
         withCredentials: true,
     })).data;
+
+    const block = res && res.req;
+    const data = (block && block.data) || {};
+    const body = data.body || {};
+    const key = searchTypeMap[safeType] || "song";
+    const node = body[key] || {};
+    const list = Array.isArray(node.list) ? node.list : [];
+    const total = Number((data.meta && (data.meta.sum || data.meta.estimate_sum)) || node.total || 0);
+
     return {
-        isEnd: res.req_1.data.meta.sum <= page * pageSize,
-        data: res.req_1.data.body[searchTypeMap[type]].list,
+        isEnd: total > 0 ? total <= safePage * pageSize : list.length < pageSize,
+        data: list,
     };
 }
 async function searchMusic(query, page) {
     const songs = await searchBase(query, page, 0);
     return {
         isEnd: songs.isEnd,
-        data: songs.data.filter(validSongFilter).map(formatMusicItem),
+        data: songs.data.map(formatMusicItem),
     };
 }
 async function searchAlbum(query, page) {
@@ -187,48 +210,46 @@ const typeMap = {
         e: ".flac",
     },
 };
-async function getSourceUrl(id, type = "128") {
-    const mediaId = id;
-    let uin = "";
-    const guid = (Math.random() * 10000000).toFixed(0);
-    const typeObj = typeMap[type];
-    const file = `${typeObj.s}${id}${mediaId}${typeObj.e}`;
-    const url = changeUrlQuery({
-        "-": "getplaysongvkey",
-        g_tk: 5381,
-        loginUin: uin,
-        hostUin: 0,
-        format: "json",
-        inCharset: "utf8",
-        outCharset: "utf-8¬ice=0",
-        platform: "yqq.json",
-        needNewCode: 0,
-        data: JSON.stringify({
-            req_0: {
-                module: "vkey.GetVkeyServer",
-                method: "CgiGetVkey",
-                param: {
-                    filename: [file],
-                    guid: guid,
-                    songmid: [id],
-                    songtype: [0],
-                    uin: uin,
-                    loginflag: 1,
-                    platform: "20",
-                },
-            },
-            comm: {
+async function getSourceUrl(id, type = "128", mediaMid) {
+    const songmid = String(id || "");
+    const fileMid = String(mediaMid || songmid);
+    let uin = "0";
+    const guid = "10000";
+    const typeObj = typeMap[type] || typeMap["128"];
+    const file = `${typeObj.s}${fileMid}${typeObj.e}`;
+
+    const data = {
+        req_1: {
+            module: "vkey.GetVkeyServer",
+            method: "CgiGetVkey",
+            param: {
+                filename: [file],
+                guid: guid,
+                songmid: [songmid],
+                songtype: [0],
                 uin: uin,
-                format: "json",
-                ct: 19,
-                cv: 0,
-                authst: "",
+                loginflag: 1,
+                platform: "20",
             },
-        }),
-    }, "https://u.y.qq.com/cgi-bin/musicu.fcg");
+        },
+        loginUin: "0",
+        comm: {
+            uin: "0",
+            format: "json",
+            ct: 24,
+            cv: 0,
+        },
+    };
+
     return (await (0, axios_1.default)({
-        method: "GET",
-        url: url,
+        url: "https://u.y.qq.com/cgi-bin/musicu.fcg",
+        method: "POST",
+        data,
+        headers: Object.assign(Object.assign({}, headers), {
+            "Content-Type": "application/json;charset=UTF-8",
+            Accept: "application/json, text/plain, */*",
+        }),
+        timeout: 15000,
         xsrfCookieName: "XSRF-TOKEN",
         withCredentials: true,
     })).data;
@@ -484,16 +505,16 @@ async function getMusicSheetInfo(sheet, page) {
     };
 }
 module.exports = {
-    platform: "QQ音乐",
-    author: "猫头猫",
+    platform: "QQ闊充箰",
+    author: "鐚ご鐚�",
     version: "0.2.2-alpha.3",
     srcUrl: "https://gitee.com/maotoumao/MusicFreePlugins/raw/v0.1/dist/qq/index.js",
     cacheControl: "no-cache",
     hints: {
         importMusicSheet: [
-            "QQ音乐APP：自建歌单-分享-分享到微信好友/QQ好友；然后点开并复制链接，直接粘贴即可",
-            "H5：复制URL并粘贴，或者直接输入纯数字歌单ID即可",
-            "导入过程中会过滤掉所有VIP/试听/收费音乐，导入时间和歌单大小有关，请耐心等待",
+            "QQ闊充箰APP锛氳嚜寤烘瓕鍗�-鍒嗕韩-鍒嗕韩鍒板井淇″ソ鍙�/QQ濂藉弸锛涚劧鍚庣偣寮€骞跺鍒堕摼鎺ワ紝鐩存帴绮樿创鍗冲彲",
+            "H5锛氬鍒禪RL骞剁矘璐达紝鎴栬€呯洿鎺ヨ緭鍏ョ函鏁板瓧姝屽崟ID鍗冲彲",
+            "瀵煎叆杩囩▼涓細杩囨护鎺夋墍鏈塚IP/璇曞惉/鏀惰垂闊充箰锛屽鍏ユ椂闂村拰姝屽崟澶у皬鏈夊叧锛岃鑰愬績绛夊緟",
         ],
     },
     primaryKey: ["id", "songmid"],
@@ -528,18 +549,38 @@ module.exports = {
         else if (quality === "super") {
             type = "flac";
         }
-        const result = await getSourceUrl(musicItem.songmid, type);
-        if (result.req_0 && result.req_0.data && result.req_0.data.midurlinfo) {
-            purl = result.req_0.data.midurlinfo[0].purl;
+        let result = await getSourceUrl(musicItem.songmid, type, musicItem.media_mid);
+        let reqBlock = result && (result.req_1 || result.req_0 || result.req);
+        let sourceData = (reqBlock && reqBlock.data) || {};
+        let info = Array.isArray(sourceData.midurlinfo) ? (sourceData.midurlinfo[0] || {}) : {};
+        purl = info.purl || info.wifiurl || "";
+
+        if (!purl && musicItem.media_mid && musicItem.media_mid !== musicItem.songmid) {
+            result = await getSourceUrl(musicItem.songmid, type, musicItem.songmid);
+            reqBlock = result && (result.req_1 || result.req_0 || result.req);
+            sourceData = (reqBlock && reqBlock.data) || {};
+            info = Array.isArray(sourceData.midurlinfo) ? (sourceData.midurlinfo[0] || {}) : {};
+            purl = info.purl || info.wifiurl || "";
         }
+
         if (!purl) {
             return null;
         }
-        if (domain === "") {
-            domain =
-                result.req_0.data.sip.find((i) => !i.startsWith("http://ws")) ||
-                    result.req_0.data.sip[0];
+
+        const sip = Array.isArray(sourceData.sip) ? sourceData.sip : [];
+        domain =
+            sip.find((i) => typeof i === "string" && !i.startsWith("http://ws")) ||
+            sip[0] ||
+            "";
+
+        if (/^https?:\/\//.test(purl)) {
+            return { url: purl };
         }
+
+        if (!domain) {
+            return null;
+        }
+
         return {
             url: `${domain}${purl}`,
         };
